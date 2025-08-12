@@ -47,6 +47,41 @@ pip install -r requirements.txt
 
 ---
 
+## 🖥️ Configuration personnalisée & Adaptation nécessaire
+
+### ⚡ Bot optimisé pour ma configuration
+
+Ce bot a été **développé et optimisé spécifiquement pour mon environnement de travail** :
+
+- **Configuration matérielle** : Testé uniquement sur ma machine personnelle
+- **Ressources système** : Calibré pour mes capacités RAM/CPU spécifiques
+- **Chemins et dossiers** : Codés en dur pour mon système Windows
+- **Paramètres ML** : Ajustés selon mes performances hardware
+
+### 🔧 Adaptation nécessaire pour d'autres utilisateurs
+
+Si vous souhaitez utiliser ce bot, vous devrez **probablement adapter** :
+
+- **Chemins de fichiers** : Modifier les chemins absolus dans le code
+- **Paramètres de mémoire** : Ajuster selon votre RAM disponible
+- **Threads/Workers** : Adapter au nombre de cœurs de votre CPU
+- **Batch sizes** : Réduire si vous avez moins de mémoire
+- **Intervalles de collecte** : Augmenter si connexion plus lente
+
+### 🚀 Version 3 en préparation
+
+Une **V3 est prévue** avec des améliorations majeures :
+
+- ✨ **Auto-configuration** : Détection automatique des ressources système
+- 🎯 **Adaptation dynamique** : Ajustement automatique selon votre hardware
+- 📦 **Installation simplifiée** : Assistant de configuration intégré
+- 🔄 **Profils prédéfinis** : Low/Medium/High selon votre machine
+- 🌐 **Multi-plateforme** : Support Windows/Linux/Mac natif
+
+**En attendant** : Cette V2 reste fonctionnelle mais nécessite des ajustements manuels selon votre configuration. N'hésitez pas à ouvrir une issue GitHub si vous rencontrez des difficultés
+
+---
+
 ## 🚨 Limitations
 
 - **Pas de trading automatique** – uniquement des prédictions
