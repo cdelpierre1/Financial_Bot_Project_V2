@@ -2,6 +2,7 @@
 [![Projet d'apprentissage – Pas d'usage pro ni commercial](https://img.shields.io/badge/Projet%20d'apprentissage-Pas%20d'usage%20pro%20ni%20commercial-red)](#-sécurité--avertissements)  
 [![Avertissement – Aucun conseil financier](https://img.shields.io/badge/Avertissement-Aucun%20conseil%20financier-orange)](#-sécurité--avertissements)  
 [![Licence MIT Modifiée](https://img.shields.io/badge/Licence-MIT%20Modifi%C3%A9e-blue)](LICENSE)
+[![Documentation Technique](https://img.shields.io/badge/Documentation-Technique-green)](Documentation_Technique.md)
 
 
 ## 📌 Description
