@@ -47,20 +47,28 @@ class ConfidenceEstimator:
         """Charge les résultats d'évaluation historiques."""
         try:
             parquet_path = self._settings.get("paths", {}).get("data_parquet", "src/data/parquet")
+            # ROOT pointe déjà vers src/, donc on retire "src/" du chemin
+            if parquet_path.startswith("src/"):
+                parquet_path = parquet_path[4:]  # Enlever "src/"
             eval_path = os.path.join(ROOT, parquet_path, "eval_results")
             
             if not os.path.exists(eval_path):
                 return None
                 
-            # Lire tous les fichiers parquet d'évaluation
+            # Lire tous les fichiers parquet d'évaluation (un par un pour éviter conflits de schéma)
             frames = []
             for root, _, files in os.walk(eval_path):
                 for file in files:
                     if file.endswith('.parquet'):
                         try:
-                            df = pd.read_parquet(os.path.join(root, file))
+                            file_path = os.path.join(root, file)
+                            df = pd.read_parquet(file_path)
+                            # Convertir date en string pour éviter conflit de schéma
+                            if 'date' in df.columns:
+                                df['date'] = df['date'].astype(str)
                             frames.append(df)
-                        except Exception:
+                        except Exception as e:
+                            print(f"Warning: Could not read {file}: {e}")
                             continue
             
             if not frames:
@@ -74,7 +82,8 @@ class ConfidenceEstimator:
             
             return combined
             
-        except Exception:
+        except Exception as e:
+            print(f"Error loading eval results: {e}")
             return None
 
     def _calculate_historical_mae(self, coin_id: str, horizon_minutes: int, days_back: int = 30) -> Optional[float]:
@@ -92,8 +101,25 @@ class ConfidenceEstimator:
             return None
             
         try:
+            # Extraire coin_id et horizon depuis prediction_id format: "bitcoin_10_timestamp"
+            def extract_coin_horizon(pred_id):
+                parts = pred_id.split('_')
+                if len(parts) >= 2:
+                    coin = parts[0]
+                    try:
+                        horizon = int(parts[1])
+                        return coin, horizon
+                    except ValueError:
+                        return None, None
+                return None, None
+            
+            # Ajouter colonnes extraites
+            df[['extracted_coin', 'extracted_horizon']] = df['prediction_id'].apply(
+                lambda x: pd.Series(extract_coin_horizon(x))
+            )
+            
             # Filtrer par coin et horizon
-            mask = (df['coin_id'] == coin_id) & (df['horizon_minutes'] == horizon_minutes)
+            mask = (df['extracted_coin'] == coin_id) & (df['extracted_horizon'] == horizon_minutes)
             filtered = df[mask].copy()
             
             if filtered.empty:
@@ -104,13 +130,13 @@ class ConfidenceEstimator:
                 cutoff = datetime.now() - timedelta(days=days_back)
                 filtered = filtered[filtered['datetime'] >= cutoff]
             
-            if filtered.empty or 'mae_pct' not in filtered.columns:
+            if filtered.empty or 'error_pct' not in filtered.columns:
                 return None
                 
             # Calculer la MAE moyenne pondérée (plus de poids aux données récentes)
             filtered = filtered.sort_values('datetime') if 'datetime' in filtered.columns else filtered
             weights = np.linspace(0.5, 1.0, len(filtered))  # Poids croissants
-            mae = np.average(filtered['mae_pct'].values, weights=weights)
+            mae = np.average(filtered['error_pct'].values, weights=weights)
             
             # Mettre en cache
             self._cache[cache_key] = (datetime.now(), float(mae))
@@ -134,11 +160,28 @@ class ConfidenceEstimator:
             return None
             
         try:
+            # Extraire coin_id et horizon depuis prediction_id format: "bitcoin_10_timestamp"
+            def extract_coin_horizon(pred_id):
+                parts = pred_id.split('_')
+                if len(parts) >= 2:
+                    coin = parts[0]
+                    try:
+                        horizon = int(parts[1])
+                        return coin, horizon
+                    except ValueError:
+                        return None, None
+                return None, None
+            
+            # Ajouter colonnes extraites
+            df[['extracted_coin', 'extracted_horizon']] = df['prediction_id'].apply(
+                lambda x: pd.Series(extract_coin_horizon(x))
+            )
+            
             # Filtrer par coin et horizon
-            mask = (df['coin_id'] == coin_id) & (df['horizon_minutes'] == horizon_minutes)
+            mask = (df['extracted_coin'] == coin_id) & (df['extracted_horizon'] == horizon_minutes)
             filtered = df[mask].copy()
             
-            if filtered.empty or 'mae_pct' not in filtered.columns:
+            if filtered.empty or 'error_pct' not in filtered.columns:
                 return None
             
             # Garder seulement les derniers jours
@@ -149,7 +192,7 @@ class ConfidenceEstimator:
             if len(filtered) < 5:  # Besoin d'au moins 5 points pour calculer la volatilité
                 return None
                 
-            volatility = float(filtered['mae_pct'].std())
+            volatility = float(filtered['error_pct'].std())
             
             # Mettre en cache
             self._cache[cache_key] = (datetime.now(), volatility)
