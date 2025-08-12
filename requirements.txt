@@ -1,0 +1,58 @@
+# Environnement figé pour financial_bot_crypto_V2 (Windows x64, Python 3.11)
+# NOTE: Ce fichier inclut l’index PyTorch CUDA 12.6 pour installer torch/vision GPU.
+--extra-index-url https://download.pytorch.org/whl/cu126
+
+# Outils de base
+setuptools==70.3.0
+wheel==0.44.0
+typing-extensions==4.12.2
+
+# Réseau / robustesse
+httpx[http2]==0.27.2
+requests==2.32.3
+tenacity==8.4.2
+python-dateutil==2.9.0.post0
+tzdata==2024.1
+
+# Données / Parquet
+numpy==1.26.4
+pandas==2.2.2
+pyarrow==16.1.0
+zstandard==0.22.0
+
+# Orchestration / Processus
+APScheduler==3.10.4
+filelock==3.15.4
+psutil==5.9.8
+
+# CLI / Console
+typer==0.12.3
+rich==13.7.1
+click==8.1.7
+
+# Config / Validation / Secrets
+pydantic==2.8.2
+jsonschema==4.22.0
+python-dotenv==1.0.1
+cryptography==42.0.8
+
+# Logging / Métriques
+structlog==24.1.0
+prometheus-client==0.20.0
+
+# ML classiques
+scipy==1.13.1
+scikit-learn==1.4.2
+lightgbm==4.3.0
+xgboost==2.0.3
+cachetools==5.3.3
+
+# Deep Learning (GPU, CUDA 12.6)
+# Ces lignes installent les builds GPU depuis l’index PyTorch ci-dessus
+# (nécessite pilote NVIDIA ≥ 560.76 et GPU RTX compatible)
+torch==2.8.0+cu126
+torchvision==0.23.0+cu126
+
+# Tests
+pytest==8.3.2
+pytest-timeout==2.3.1
