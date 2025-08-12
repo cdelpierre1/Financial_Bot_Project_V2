@@ -1202,13 +1202,17 @@ def main():
                 )
                 
                 print(f"\nResultats pour {args.coin}:")
-                print(f"   - Confiance globale: {metrics.get('overall_confidence', 0):.2%}")
-                print(f"   - Precision historique: {metrics.get('historical_mae', 0):.2%}")
-                print(f"   - Incertitude: {metrics.get('uncertainty', 0):.2%}")
-                print(f"   - Volatilite: {metrics.get('volatility', 0):.2%}")
+                print(f"   - Confiance globale: {metrics.get('calibrated_mae_pct', 0)*100:.2f}%")
+                print(f"   - Precision historique: {metrics.get('historical_mae_pct', 0)*100:.2f}%")
+                print(f"   - Incertitude: {metrics.get('calibrated_uncertainty_pct', 0)*100:.2f}%")
+                print(f"   - Volatilite: {metrics.get('historical_volatility_pct', 0)*100:.2f}%")
+                print(f"   - Seuil configure: {metrics.get('threshold_pct', 0)*100:.2f}%")
+                print(f"   - Donnees historiques: {'✅ Oui' if metrics.get('has_historical_data', False) else '❌ Non'}")
                 
             except Exception as e:
                 print(f"Erreur calcul metriques: {e}")
+                import traceback
+                traceback.print_exc()
                 
         elif args.command == 'models':
             from prediction.model_store import ModelStore
