@@ -1,0 +1,57 @@
+{
+	"coingecko": {
+		"base_url": "https://YOUR_COINGECKO_API_ENDPOINT_HERE",
+		"user_agent": "financial-bot-crypto-v2/1.0",
+			"plan": "lite-pro",
+			"auth": {
+				"header_name": "x-cg-pro-api-key",
+				"env_keys_var": "COINGECKO_API_KEYS",
+				"rotation": "round_robin",
+				"rpm_per_key": 500,
+				"monthly_cap_total": 2000000
+			},
+		"endpoints": {
+			"simple_price": "/simple/price",
+			"coins_markets": "/coins/markets",
+			"market_chart": "/coins/{id}/market_chart",
+			"market_chart_range": "/coins/{id}/market_chart/range",
+			"ohlc": "/coins/{id}/ohlc",
+			"tickers": "/coins/{id}/tickers"
+		},
+		"default_params": {
+			"vs_currency": "usd",
+			"order": "market_cap_desc",
+			"per_page": 100,
+			"page": 1,
+			"price_change_percentage": "1h,24h,7d",
+			"precision": "full"
+		},
+		"timeouts_sec": { "connect": 5, "read": 10 },
+		"retries": { "max_attempts": 3, "backoff_sec": 1.5, "jitter_pct": 0.2 },
+		"ttl_sec": {
+			"simple_price": 10,
+			"coins_markets": 60,
+			"market_chart": 300,
+			"tickers": 600
+		}
+	},
+	"fx": {
+			"provider": "exchangerate-api",
+		"exchangerate_api": {
+			"base_url": "https://YOUR_EXCHANGE_RATE_API_ENDPOINT_HERE",
+				"endpoint_latest": "/{api_key}/latest/EUR",
+				"env_api_key_var": "FX_API_KEY",
+				"direct_latest_url_example": "https://YOUR_EXCHANGE_RATE_API_ENDPOINT_HERE/${FX_API_KEY}/latest/EUR"
+		},
+		"exchangerate_host": {
+			"base_url": "https://YOUR_BACKUP_EXCHANGE_RATE_ENDPOINT_HERE",
+			"endpoint_latest": "/latest?base=EUR"
+		},
+		"timeouts_sec": { "connect": 5, "read": 10 },
+		"retries": { "max_attempts": 3, "backoff_sec": 2.0, "jitter_pct": 0.2 },
+		"ttl_sec": 3600
+	}
+}
+
+
+

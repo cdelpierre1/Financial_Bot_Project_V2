@@ -1,0 +1,15 @@
+{
+	"currency": "EUR",
+	"targets": [
+		{ "id": "bitcoin",      "symbol": "BTC",  "profit_net_eur": { "6h": 50.0,  "24h": 200.0 } },
+		{ "id": "ethereum",     "symbol": "ETH",  "profit_net_eur": { "6h": 60.0,  "24h": 100.0 } },
+		{ "id": "solana",       "symbol": "SOL",  "profit_net_eur": { "6h": 30.0,  "24h": 60.0  } },
+		{ "id": "binancecoin",  "symbol": "BNB",  "profit_net_eur": { "6h": 30.0,  "24h": 80.0  } },
+		{ "id": "ripple",       "symbol": "XRP",  "profit_net_eur": { "6h": 15.0,  "24h": 40.0  } },
+		{ "id": "cardano",      "symbol": "ADA",  "profit_net_eur": { "6h": 15.0,  "24h": 40.0  } },
+		{ "id": "avalanche-2",  "symbol": "AVAX", "profit_net_eur": { "6h": 25.0,  "24h": 70.0  } },
+		{ "id": "chainlink",    "symbol": "LINK", "profit_net_eur": { "6h": 20.0,  "24h": 60.0  } },
+		{ "id": "polygon-pos",  "symbol": "MATIC","profit_net_eur": { "6h": 15.0,  "24h": 40.0  } },
+		{ "id": "dogecoin",     "symbol": "DOGE", "profit_net_eur": { "6h": 10.0,  "24h": 30.0  } }
+	]
+}

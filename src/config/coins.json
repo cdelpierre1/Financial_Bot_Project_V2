@@ -1,0 +1,14 @@
+{
+  "coins": [
+    { "id": "bitcoin",      "symbol": "BTC",  "name": "Bitcoin",   "enabled": true },
+    { "id": "ethereum",     "symbol": "ETH",  "name": "Ethereum",  "enabled": true },
+    { "id": "solana",       "symbol": "SOL",  "name": "Solana",    "enabled": true },
+    { "id": "binancecoin",  "symbol": "BNB",  "name": "BNB",       "enabled": true },
+    { "id": "ripple",       "symbol": "XRP",  "name": "XRP",       "enabled": true },
+    { "id": "cardano",      "symbol": "ADA",  "name": "Cardano",   "enabled": true },
+    { "id": "avalanche-2",  "symbol": "AVAX", "name": "Avalanche", "enabled": true },
+    { "id": "chainlink",    "symbol": "LINK", "name": "Chainlink", "enabled": true },
+    { "id": "matic-network", "symbol": "MATIC","name": "Polygon",   "enabled": true },
+    { "id": "dogecoin",     "symbol": "DOGE", "name": "Dogecoin",  "enabled": true }
+  ]
+}

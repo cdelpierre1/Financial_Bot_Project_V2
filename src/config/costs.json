@@ -1,0 +1,16 @@
+{
+	"trading_fee_eur_per_order": 1.0,
+	"spread_proxy": {
+		"margin_pct": 0.002, 
+		"use_median": true,
+		"whitelist_exchanges": [
+			"binance",
+			"coinbase",
+			"kraken",
+			"bitstamp",
+			"okx",
+			"bybit"
+		]
+	},
+	"micro_slippage_pct": 0.0005
+}
